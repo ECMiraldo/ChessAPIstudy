@@ -2,6 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ChessAPI</title>
     <link rel="stylesheet" href="styles.css"/>
@@ -10,35 +12,61 @@
 
 </head>
 <body>
-    <header>
-        <nav>
-            <ul class = "nav_list">
-                <li class = "nav_item"> Home </li>
-                <li class = "nav_item"> About </li>
-                <li class = "nav_item"> Stuff </li>
+    <div class="main-container">
+        <header>
+            <nav>
+                <p class = "nav_item"> Home</p>
+                <p class = "nav_item"> About</p>
+            </nav> 
+            <div class = "hero" >
+                <h1>Chess</h1>
+                <img src = "images/chessMiniLogo.png"/>
+            </div>
+        </header>
+        <div class = "content-selection">
+            <p class = "instructions">
+                Choose a player from the drop-down list to fetch 
+                his recent games from the chess.com API
+            </p>
+            <select name= "players" id="players" class = "PlayerSelection">
+                <option disabled selected hidden>Select Player</option>
+                <option value="Magnus">Magnus Carlsen</option>
+                <option value="Hikaru">Hikaru Nakamura</option>
+                <option value="Caruana">Fabiano Caruana</option>
+                <option value="Liren">Ding Liren</option>
+            </select>
+            <button id="FetchGames">
+            </button>
+         <!-- <select name= "players" id="players" class = "PlayerSelection">
+                <option value="none">Select Player</option>
+                <option value="Magnus">MagnusCarlsen</option>
+                <option value="Hikaru">Hikaru Nakamura</option>
+                <option value="Caruana">Fabiano Caruana</option>
+                <option value="Liren">Ding Liren</option>
+
+            </select> -->
+        </div>
+
+
+
+       <!-- <section class = "RecentGames">
+            <h1> Recent Pro-Games</h1> 
+            <div class = "ListHeader">
+                <a class = "time_control"> Time Control </a>
+                <a class = "players"> Players </a>
+                <a class = "accuracy"> Accuracy </a>
+                <a class = "date"> Date </a>
+                <a class = "url"> Url </a>
+            </div>
+            <ul id="GameList" class = "games_list">
+    
             </ul>
-        </nav>
-        <div class = "hero" >
-            <h1>Chess</h1>
-            <img src = "images/chessMiniLogo.png"/>
-        </div>
-    </header>
-   <section class = "RecentGames">
-        <h1> Recent Pro-Games</h1> 
-        <div class = "ListHeader">
-            <a class = "time_control"> Time Control </a>
-            <a class = "players"> Players </a>
-            <a class = "accuracy"> Accuracy </a>
-            <a class = "date"> Date </a>
-            <a class = "url"> Url </a>
-        </div>
-        <ul id="GameList" class = "games_list">
-
-        </ul>
-   </section>
-
-    <footer>
-        <p>Demo Website built by Eduardo Cacciari Miraldo </p>
-    </footer>
+       </section> -->
+    
+        <!-- <footer>
+            <p>Demo Website built by Eduardo Cacciari Miraldo </p>
+        </footer> -->
+    </div>
+   
 </body>
 </html>

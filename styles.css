@@ -75,6 +75,7 @@ nav {
     flex-direction: column;
     align-items: center;
     height: max-content;
+    padding-bottom: 25px;
 }
 
 .instructions {
@@ -107,7 +108,25 @@ nav {
     display: block;
     z-index: 99;
 }   
-    
+
+.getGamesButton {
+    width: 200px;
+    margin-top: 20px;
+}
+
+.RecentGames {
+    padding-left: 15px;
+}
+
+footer{
+    background-color: black;
+    position: fixed;
+    bottom: 0;
+    text-align:center;
+    width: 100%;
+    font-size: small;
+    margin-top: 50px;
+}
 
 /* 480px - 768px = tablet */
 @media (min-width: 480px) {

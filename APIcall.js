@@ -1,10 +1,26 @@
 const date = new Date()
 const month = date.toJSON().slice(5,7)
 const year = date.getFullYear()
-const APIurl = "https://api.chess.com/pub/player/magnuscarlsen/games/"+year+"/"+month;
+let value = ""
+let cardArray = [];
 
-function fetchData(gameList) {
-    fetch(APIurl,)
+
+function GetURL() {
+    value = document.getElementById("players").value;
+    if (value == "Select Player") {
+        return "";
+    }
+    return "https://api.chess.com/pub/player/"+value+"/games/"+year+"/"+month;   
+}
+
+
+function fetchData(grid) {
+    value = document.getElementById("players").value;
+    const url = GetURL(value)
+    if (url == "") {
+        return;
+    }
+    fetch(url,)
     .then(response => {
         if (!response.ok) {
             throw new Error("player API response error" + response.Error)
@@ -12,35 +28,46 @@ function fetchData(gameList) {
         return response.json();
     })
     .then(data => {
-        SetCardData(data["games"], gameList)
-
+        SetCardData(data["games"], grid)
     })
     .catch(error => {
         console.log("Error: ", error);
     });
 }
 
-function SetCardData(gameData, gameList) {
-    let cardArray = [];
-    for(i = 0; i< 10; i++){
-        cardArray[i] = new GameCard(gameData[i])
-        console.log(gameData[i])
-        gameList.appendChild(cardArray[i])
+function SetCardData(gameData, grid) {
+    if (cardArray.length == 0) {
+        for(i = 1; i< 11; i++){
+            grid.AddRow(new GameCard(gameData[i]))
+        }
+    }
+    else {
+        for(i = 1; i< 11; i++){
+            cardArray[i].ChangeData(gameData[i])
+        }
     }
 }
 
 
 
-
 document.addEventListener("DOMContentLoaded", function() {
-    var gameList = document.getElementById("GameList");
-    console.log(gameList);
-    console.log(month, year)
+    var el = document.getElementById("FetchGames");
+    let grid = CreateGrid()
+    if (el.addEventListener)
+        el.addEventListener("click", function() {
+        fetchData(grid), false
+    });
+    else if (el.attachEvent)
+        el.attachEvent('onclick',  function() {
+            fetchData(grid)
+        });
 
-    if (gameList) {
-        fetchData(gameList)
-    } else {
-        console.error("GameList element not found.");
-    }
-    
-});
+})
+
+function CreateGrid(){
+    var gridContainer = document.getElementById("GridContainer");
+    let customGrid = new CustomGrid();
+    gridContainer.appendChild(customGrid);
+    console.log(customGrid.parentElement)
+    return customGrid;
+}

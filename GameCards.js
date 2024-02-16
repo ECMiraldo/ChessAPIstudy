@@ -1,78 +1,3 @@
-// 
-
-// class GameCard extends HTMLElement {
-//     constructor(gameData) {
-//         super();
-//         this.attachShadow({ mode: "open" });
-//         this.timeControl = gameData["time_control"];
-//         this.blackUsername = gameData["black"]["username"];
-//         this.whiteUsername = gameData["white"]["username"];
-//         this.date = new Date(gameData["end_time"] * 1000);
-//         this.whiteAccuracy = gameData["accuracies"]["white"];
-//         this.blackAccuracy = gameData["accuracies"]["black"];
-//         this.whiteRating = gameData["white"]["rating"];
-//         this.blackRating = gameData["black"]["rating"];
-//         this.url = gameData["url"];
-//     }
-
-//     connectedCallback() {
-//         this.render();
-//     }
-
-//     ChangeData(gameData) {
-//         this.timeControl = gameData["time_control"];
-//         this.blackUsername = gameData["black"]["username"];
-//         this.whiteUsername = gameData["white"]["username"];
-//         this.date = new Date(gameData["end_time"] * 1000);
-//         this.whiteAccuracy = gameData["accuracies"]["white"];
-//         this.blackAccuracy = gameData["accuracies"]["black"];
-//         this.whiteRating = gameData["white"]["rating"];
-//         this.blackRating = gameData["black"]["rating"];
-//         this.url = gameData["url"];
-//         this.render();
-//     }
-
-//     render() {
-//         if (this.shadowRoot) {
-//             this.shadowRoot.innerHTML = `
-//                 <style>
-//                     .CardContainer {
-//                         display: flex;
-//                         background-color: #161A30;
-//                         align-items: center;
-//                     }
-           
-//                     .TimeControl {
-//                         padding-left:25px;
-//                         text-align: center;
-//                         width: 8vw;
-//                     }
-
-//                     .Colors {
-//                         width: 10vw;
-//                         padding-left: 5vw;
-//                         height: 80px;
-//                         display: flex;
-//                         align-items: end;
-//                         justify-content: flex-start;
-//                         flex-direction: column;
-//                     }
-
-//                     .white {
-//                         background-color: white;
-//                         width: 17px;
-//                         height: 17px;
-//                         border-radius: 7px;
-//                         margin-top: 15px;
-//                     }
-
-//                     .black {
-//                         background-color: black;
-//                         width: 20px;
-//                         height: 20px;
-//                         border-radius: 7px;
-//                         margin-top: 14px;
-//                     }
 
 //                     .Ratings {
 //                         padding-left: 15px;
@@ -121,22 +46,15 @@
 //                     <div class= "Url">
 //                         <p> url</p>
 //                     </div>
-//                 </li>
-//                 <button class="Expand">
-//                     <img src="/images/ExpandArrow.png/>
-//                 </button>
-//             `;
-//         } else {
-//             console.error("Shadow DOM not available.");
-//         }
-//     }
-// }
 
-const winner = {White: 0, Black: 1}
+               
 
 class GameCard extends HTMLElement {
-    constructor(gameData) {
+    constructor(gameData, id) {
         super();
+        this.selfID = id;
+        this.gameData = gameData; 
+        this.expanded = false; // Track expansion state
         this.attachShadow({ mode: "open" });
         this.timeControl = gameData["time_control"];
         this.blackUsername = gameData["black"]["username"];
@@ -146,12 +64,38 @@ class GameCard extends HTMLElement {
         this.blackAccuracy = gameData["accuracies"]["black"];
         this.whiteRating = gameData["white"]["rating"];
         this.blackRating = gameData["black"]["rating"];
+        this.gameRating = (gameData["white"]["rating"] + gameData["black"]["rating"]) / 2;
         this.url = gameData["url"];
+        this.winner = this.checkWinner(gameData["white"]["result"]);
     }
     
+    checkWinner(whiteResult) {
+        switch (whiteResult) {
+            case "win": return "White";
+            case "agreed": return "Draw";
+            case "repetition": return "Draw";
+            case "timeout": return "Black";
+            case "resigned": return "Black";
+            case "stalemate": return "Draw";
+            case "lose": return "Black";
+            case "insufficient": return "Draw";
+            case "50move": return "Draw";
+            case "abandoned": return "Black";
+            case "timevinsuffient": return "Draw";
+            default: return "NoInfo";
+        }
+    }
+
     connectedCallback() {
         this.render();
     }
+
+    expandClickHandler = () => {
+        // Toggle expansion state
+        this.expanded = !this.expanded;
+        // Re-render the component to reflect the updated expansion state
+        this.render();
+    };
 
     ChangeData(gameData) {
         this.timeControl = gameData["time_control"];
@@ -172,48 +116,138 @@ class GameCard extends HTMLElement {
             <style>
                 .CardRow {
                     display: flex;
+                    border-style: groove;
+                    border-width: 5px;
+                    border-radius: 10px;
+                    flex-direction: column;
+                    align-items: center;
+                    padding-bottom: 12px;
+                    padding-top:12px;
+                }
+                .MinimizedRow {
+                    display: flex;
+                    width: 100%;
                     flex-direction: row;
                     align-items: center;
-                    padding-bottom: 25px;
                 }
                 .TimeControl {
-                    width: 30%;
+                    width: 35%;
                     text-align: center;
                 }
+
+
                 .PlayersDiv {
-                    padding-left: 30px;
-                    width: 35%;
+                    width: 55%;
+                    text-overflow: ellipsis;
                     display: flex;
-                    flex-direction: column;
-                    margin: 0px;
+                    align-items: flex-start;
+                    flex-direction: row;
                 }
 
                 .PlayersDiv p{
                     margin: 0px;
+                    text-align: flex-start;
+                }
+
+                
+                .Colors {
+                    height: 100%;
+                    padding-top: 4px;
+                    padding-right: 10px;
+                    width: min-content;
+                    display: flex;
+                    align-items: flex-start;
+                    flex-direction: column;
+                }
+                
+                .white {
+                    background-color: white;
+                    width: 10px;
+                    height: 10px;
+                    border-radius: 7px;
+                }
+
+                .black {
+                    background-color: black;
+                    margin-top: 28px;
+                    width: 10px;
+                    height: 10px;
+                    border-radius: 7px;
+
                 }
 
                 .vs {
-                    padding-left: 40%;
+                    padding-top: 3px;
+                    padding-bot: 4px;
                 }
 
                 .Expand {
                     object-fit: scale-down;
-                    padding-left: 30px;
-                    width: 40px;
-                    height: 40px;
+                    justify-self: flex-end;
+                    padding-right: 5px;
+                    width: 50px;
+                    height: 50px;
+                }
+                .ExpandedDetails {
+                    padding-top: 20px;
+                    width: 100%;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    display: ${this.expanded ? 'flex' : 'none'}; // Toggle visibility
+                }
+                .ExpandedRow1 {
+                    
+                    display: flex;
+                    flex-direction: row;
+                }
+
+                .ExpandedRow2 {
+                    display: flex;
+                    flex-direction: row;
                 }
 
             </style>
-            <div class="CardRow">
-                <p class = "TimeControl"> ${this.timeControl}</p>
-                <div class="PlayersDiv">
-                    <p class = "Player1"> ${this.whiteUsername}</p>
-                    <p class = "vs"> vs </p>
-                    <p class = "Player2"> ${this.blackUsername}</p>
+            <div class = "CardRow">
+                <div class="MinimizedRow">
+                    <p class = "TimeControl"> ${this.timeControl}</p>
+                    
+                    <div class="PlayersDiv">
+                        <div class = "Colors">
+                            <div class = "white"> </div>
+                            <div class = "black"> </div>
+                        </div>
+                        <div class="PlayersNames">
+                            <p class = "Player1"> ${this.whiteUsername}</p>
+                            <p class = "vs"> vs </p>
+                            <p class = "Player2"> ${this.blackUsername}</p>
+                        </div>
+                    </div>
+                    <img class ="Expand" src="./images/Expand.png" ></img>
                 </div>
-                <img class ="Expand" src="./images/Expand.png"></img>
+                <div class="ExpandedDetails">
+                    <div class ="ExpandedRow1>
+                        <p class = "Date"> Date: ${this.date.toISOString().slice(0,10)}</p>
+                        <p class = "AvgRating"> Game Rating: ${this.gameRating} </p>
+
+                    </div>
+                <div class ="ExpandedRow2>
+                    <div class ="AccuraciesContainer">
+                        <p> Black Accuracy: ${this.blackAccuracy}% </p>
+                        <p> White Accuracy: ${this.whiteAccuracy}% </p>
+                    </div>
+                    <p class = "Winner"> Winner: ${this.winner == "Black" ? this.blackUsername : this.whiteUsername}
+                </div>
+                
+                </div>
             </div>
-        `};
+
+        `;
+        const expandButton = this.shadowRoot.querySelector('.Expand');
+        expandButton.removeEventListener('click', this.expandClickHandler);
+        // Attach event listener
+        expandButton.addEventListener('click', this.expandClickHandler);
+        }
     }
 }
 

@@ -38,12 +38,15 @@ function fetchData(grid) {
 function SetCardData(gameData, grid) {
     if (cardArray.length == 0) {
         for(i = 1; i< 11; i++){
-            grid.AddRow(new GameCard(gameData[i]))
+            console.log(gameData[i]);
+            cardArray[i] = new GameCard(gameData[i], i)
+            cardArray[i].id = i;
+            grid.AddRow(cardArray[i] );
         }
     }
     else {
         for(i = 1; i< 11; i++){
-            cardArray[i].ChangeData(gameData[i])
+            cardArray[i].ChangeData(gameData[i]);
         }
     }
 }

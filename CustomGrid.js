@@ -27,17 +27,20 @@ class CustomGrid extends HTMLElement {
                 justify-content: flex-start;
                 flex-direction: row;
             }
-            .row a {
-                width: 30%;
+            .timeControl {
+                width: 25%;
+                padding-left: 5%;
+                text-align: center;
             }
             
             .players {
-                padding-left: 30px;
+                text-align: flex-start;
+                padding-left: 7%;
+                width: 35%;
             }
         `;
         // Append the style to the shadow root
         shadow.appendChild(style);
-
         this.MakeFirstRow();
     }
 
@@ -47,6 +50,7 @@ class CustomGrid extends HTMLElement {
         //time control
         const timeControl = document.createElement('a');
         timeControl.textContent = "Time Control";
+        timeControl.classList.add("timeControl")
         row.appendChild(timeControl);
         //players
         const players = document.createElement('a');
@@ -57,10 +61,11 @@ class CustomGrid extends HTMLElement {
     }
     
     AddRow(gameCard) {
-        const row = gameCard;
-
-        shadow.appendChild(row);
+        shadow.appendChild(gameCard);
     }
+
+
+
 }
 
 // Define the custom element

@@ -197,14 +197,100 @@ class GameCard extends HTMLElement {
                     display: ${this.expanded ? 'flex' : 'none'}; // Toggle visibility
                 }
                 .ExpandedRow1 {
-                    
                     display: flex;
-                    flex-direction: row;
+                    padding: 0px;
+                    margin: 0px;
+                    flex-direction: column;
                 }
-
                 .ExpandedRow2 {
                     display: flex;
-                    flex-direction: row;
+                    padding: 0px;
+                    margin: 0px;
+                    flex-direction: column;
+                }
+
+                .ExpandedRow1 p {
+                    margin: 0px;
+                    padding-bottom:5px;
+                }
+                .ExpandedRow2 p {
+                    margin: 0px;
+                    padding-bottom:5px;
+                }
+
+                .Winner {
+                    margin: 0px;
+                }
+
+
+                @media (min-width: 768px) {
+                    .CardRow {
+                        flex-direction: row;
+                    }
+
+                    .MinimizedRow {
+                        display: flex;
+                        width: 35%;
+                        flex-direction: row;
+                        align-items: center;
+                    }
+
+                    .ExpandedDetails {
+                        padding-top: 0px;
+                        
+                        width: 65%;
+                        flex-direction: row;
+                        display: flex;
+                    }
+
+                    .TimeControl {
+                        width: 12%;
+                        text-align: left;
+                        padding-left: 30px;
+                    }
+                    .PlayersDiv {
+                        width: min-content;
+                        width: 35%;
+                        padding-left: 50px;
+                    }
+
+                    .Expand {
+                        width: 0px;
+                        height 0px;
+                        display: none;
+                    }
+
+                    .ExpandedRow1 {
+                        display: flex;
+                        width: 35%;
+                        flex-direction: column;
+                        text-align: center;
+                        margin: 0px;
+                    }
+    
+                    .ExpandedRow2 {
+                        display: flex;
+                        width: 35%;
+                        flex-direction: column;
+                        text-align: center;
+                        margin: 0px;
+                    }
+
+                    .Winner {
+                        justify-self: flex-end;
+                        width: 20%;
+                        align-self:center;
+                        padding-right: 30px;
+                    }
+
+
+                }
+
+                @media (min-width: 1400px) {
+                    .TimeControl {
+                        width: 18%;
+
+                    }
                 }
 
             </style>
@@ -226,20 +312,17 @@ class GameCard extends HTMLElement {
                     <img class ="Expand" src="./images/Expand.png" ></img>
                 </div>
                 <div class="ExpandedDetails">
-                    <div class ="ExpandedRow1>
+                    <div class ="ExpandedRow2">
+                            <p> Black Accuracy: ${this.blackAccuracy}% </p>
+                            <p> White Accuracy: ${this.whiteAccuracy}% </p>
+                    </div>
+                    <div class ="ExpandedRow1">
                         <p class = "Date"> Date: ${this.date.toISOString().slice(0,10)}</p>
                         <p class = "AvgRating"> Game Rating: ${this.gameRating} </p>
-
-                    </div>
-                <div class ="ExpandedRow2>
-                    <div class ="AccuraciesContainer">
-                        <p> Black Accuracy: ${this.blackAccuracy}% </p>
-                        <p> White Accuracy: ${this.whiteAccuracy}% </p>
                     </div>
                     <p class = "Winner"> Winner: ${this.winner == "Black" ? this.blackUsername : this.whiteUsername}
                 </div>
-                
-                </div>
+
             </div>
 
         `;

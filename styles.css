@@ -36,7 +36,29 @@ nav {
     font-size: min(2em, 10dvw);
     width: 50%;
     text-align: center;
+    text-decoration: none; /* Remove underline */
+    color: white;
     margin: 0px;
+}
+
+.AboutText h1 {
+    font-size: min(2em, 10dvw);
+    text-overflow: ellipsis;
+    text-align: center;
+    text-decoration: underline;
+    padding-top: 10px;
+}
+
+.AboutText p {
+    font-size: 1rem;
+    text-overflow: ellipsis;
+    text-align: justify;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.active {
+    background-color: #5c4d44;
 }
 
 .hero {
@@ -143,7 +165,24 @@ footer{
 
 /* 768px - 1024px = telas menores, laptops */
 @media (min-width: 768px) {
-  
+    nav {
+        justify-content: flex-start;
+        padding-left: 25px;
+    }
+    
+    .nav_item {
+        width: 120px;
+    }
+    
+
+
+    .hero {
+        height: fit-content;
+    }
+    .hero img {
+        max-height: 450px;
+    }
+    
 }
 
 /* 1024px - 1200px = desktop */

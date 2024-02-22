@@ -38,6 +38,59 @@ class CustomGrid extends HTMLElement {
                 padding-left: 7%;
                 width: 35%;
             }
+
+            .accuracies {
+                display:none;
+            }
+
+            .info {
+                display:none;
+
+            }
+
+            .winner {
+                display:none;
+
+            }
+
+            @media (min-width: 768px) {
+                .timeControl {
+                    width: 12%;
+                    text-align: left;
+                    padding-left: 15px;
+                    
+                }
+                .players {
+                    text-align: left;
+                    width: 20%;
+                    padding-left: 20px;
+                }
+
+                .accuracies {
+                    display: flex;
+                    text-align: left;
+                    width: 24%;
+                    padding-left: 7%
+                }
+    
+                .info {
+                    display: flex;
+                    text-align: left;
+                    width: 16%;
+    
+                }
+    
+                .winner {
+                    display: flex;
+                    text-align: left;
+                    width: 15%;
+    
+                }
+    
+              
+                
+                
+            }
         `;
         // Append the style to the shadow root
         shadow.appendChild(style);
@@ -57,6 +110,22 @@ class CustomGrid extends HTMLElement {
         players.textContent = "Players"
         players.classList.add("players")
         row.appendChild(players);
+
+        const accuracies = document.createElement('a');
+        accuracies.textContent = "Accuracies"
+        accuracies.classList.add("accuracies")
+        row.appendChild(accuracies);
+
+        const info = document.createElement('a');
+        info.textContent = "Game Info"
+        info.classList.add("info")
+        row.appendChild(info);
+
+        const winner = document.createElement('a');
+        winner.textContent = "Winner"
+        winner.classList.add("winner")
+        row.appendChild(winner);
+
         shadow.appendChild(row);
     }
     

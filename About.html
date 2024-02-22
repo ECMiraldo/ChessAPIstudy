@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chess</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Include your CSS file -->
+    <script defer src="ActivePage.js"></script>
+
+</head>
+
+<body>
+    <div class="main-container">
+        <header>
+            <nav>
+                <a class = "nav_item" href="/index.html"> Home</a>
+                <a class = "nav_item" href="/About.html"> About</a>
+            </nav> 
+            <div class = "AboutText">
+                <h1> About this project</h1>
+                <p>
+                    This website was built for the purposes of learning and applying that knowledge in a real project.
+                    <br></br>
+                    I had never before done anything regarding web development, nor had I any experience with Javascript, but it was a fun project where I learned a lot.
+                    It was done without any framework, it is just plain vanilla JS, HTML and CSS.
+                    <br></br>
+                    Data is fetched from chess.com public API and then displayed for the user. 
+                    <br></br>
+                    The grid that shows the info for each of the games is a class that I've created and extends HTMLElement.
+                    After fetching the data, we add our rows through appending on the shadow DOM.
+                    Also, we the wait for the "DOMContentLoaded" event to fire in order to garantee we already have our grid instantiated
+                    <br></br>
+                    The website is also fully responsive and we used media queries for that.
+                    <br></br>
+                    Overall, this was a short, but very important project that allowed me the learn the basis of web development and give me the confidence to move into more complex projects.
+                    
+
+                </p>
+            </div>
+        </header>
+    </div>
+
+
+
+    <footer>
+        <p>Demo Website built by Eduardo Cacciari Miraldo </p>
+    </footer>
+</body>
+</html>

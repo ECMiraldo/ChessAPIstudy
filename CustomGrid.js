@@ -70,13 +70,13 @@ class CustomGrid extends HTMLElement {
                     display: flex;
                     text-align: left;
                     width: 24%;
-                    padding-left: 7%
+                    padding-left: 9%
                 }
     
                 .info {
                     display: flex;
                     text-align: left;
-                    width: 16%;
+                    width: 14%;
     
                 }
     
